@@ -1,0 +1,6 @@
+{
+  "name": "billwise-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "BillWise AI: restaurant offer transparency prototype (static site, no build step)"
+}

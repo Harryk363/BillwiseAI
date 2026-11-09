@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>BillWise AI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbf7f2;--card:#fff;--ink:#26221f;--mut:#7a716a;--line:#eadfd3;--or:#f26a1b;--or2:#fff0e6;--ok:#17803d;--okbg:#e7f6ec;--bad:#b42318;--badbg:#fdeceb;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#1b1815;--card:#26221f;--ink:#f6efe8;--mut:#b3a79c;--line:#3b342e;--or2:#3a2417;--okbg:#14301e;--ok:#6fd08c;--badbg:#3a1b18;--bad:#ff9b92;color-scheme:dark}}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 'DM Sans',system-ui,sans-serif}
+h1,h2,h3{font-family:'Bricolage Grotesque','DM Sans',sans-serif;line-height:1.1;margin:0}
+a{color:inherit}button,input,select{font:inherit;color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.disc{background:var(--ink);color:var(--bg);font-size:13px;text-align:center;padding:6px 12px}
+nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;flex-wrap:wrap}
+.logo{font:800 22px 'Bricolage Grotesque';text-decoration:none}.logo b{color:var(--or)}
+.nl a{margin-left:18px;text-decoration:none;font-weight:500;color:var(--mut)}.nl a:hover,.nl a.on{color:var(--or)}
+.btn{background:var(--or);color:#fff;border:0;border-radius:12px;padding:11px 18px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block}
+.btn.g{background:var(--card);color:var(--ink);border:1px solid var(--line)}.btn:disabled{opacity:.5;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--or);outline-offset:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center;padding:36px 0 48px}
+.hero h1{font-size:clamp(38px,6vw,64px);font-weight:800;letter-spacing:-.02em}
+.hero p{color:var(--mut);font-size:18px;max-width:46ch}
+.search{display:flex;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:6px;margin:22px 0 10px}
+.search input{flex:1;border:0;background:none;padding:10px;min-width:0;outline:0}
+.ticket{background:var(--card);border-radius:20px;padding:22px;border:1px solid var(--line);position:relative;box-shadow:0 18px 40px -22px rgba(242,106,27,.6)}
+.ticket:after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:8px;background:radial-gradient(circle at 8px 0,var(--bg) 6px,transparent 7px) 0 0/16px 8px}
+.row{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px dashed var(--line)}.row:last-child{border:0}
+.row.t{font-weight:700;font-size:18px}.row .neg{color:var(--ok)}.mut{color:var(--mut)}.sm{font-size:13px}
+input[type=range]{width:100%;accent-color:var(--or)}
+.in{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card)}
+.lbl{display:block;font-size:13px;font-weight:700;margin:12px 0 4px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:6px 14px;cursor:pointer;font-size:14px}.chip.on{background:var(--or);color:#fff;border-color:var(--or)}
+.img{height:130px;border-radius:14px;display:grid;place-items:center;font-size:54px;margin-bottom:12px}
+.tag{display:inline-block;background:var(--or2);color:var(--or);border-radius:8px;padding:2px 9px;font-size:13px;font-weight:700}
+.tag.x{background:var(--badbg);color:var(--bad)}
+h2{font-size:30px;margin:48px 0 18px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.banner{border-radius:12px;padding:12px 14px;font-weight:500;margin:12px 0}.banner.ok{background:var(--okbg);color:var(--ok)}.banner.no{background:var(--badbg);color:var(--bad)}
+.item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
+.st{display:flex;align-items:center;gap:8px}.st button{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer;font-weight:700}
+.chat{height:340px;overflow:auto;display:flex;flex-direction:column;gap:10px;padding:6px 2px}
+.msg{max-width:85%;padding:10px 14px;border-radius:16px;white-space:pre-line}.msg.u{align-self:flex-end;background:var(--or);color:#fff}.msg.a{background:var(--or2)}
+.bar{height:10px;border-radius:9px;background:var(--line);overflow:hidden;margin:6px 0}.bar i{display:block;height:100%;background:var(--or);transition:width .4s}
+footer{margin-top:60px;border-top:1px solid var(--line);padding:26px 0;color:var(--mut);font-size:14px}
+.best{border:2px solid var(--or)}
+@media(max-width:800px){.hero,.two{grid-template-columns:1fr}.nl a{margin:0 14px 0 0}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body>
+<div class="disc">Prototype with fictional restaurants and sample offers. Not affiliated with Swiggy or Dineout. No real bookings.</div>
+<div class="wrap"><nav><a class="logo" href="#home">Bill<b>Wise</b> AI</a><div class="nl" id="nl"></div></nav><main id="app"></main>
+<footer><b>BillWise AI</b>: Know what you’ll save before you dine. A product concept for a Dineout-style experience. All restaurants, ratings, prices and offers are illustrative sample data. All amounts are estimates; taxes and charges are whatever you enter.</footer></div>
+<script>
+const M=(n,p,c='food')=>({n,p,c});
+const EXL={bev:'Beverages',seafood:'Seafood platters',setmenu:'Set menus',combo:'Combos',packaged:'Packaged products'};
+const R=[
+{id:'saffron',name:'The Saffron Table',cu:'North Indian',r:4.5,pr:'₹₹₹',e:'🍛',h:28,d:'Slow-cooked curries and saffron-laced desserts in a warm, lamp-lit dining room.',o:{t:'pct',v:20,min:1000,cap:300,ex:[]},m:[M('Paneer Lababdar',420),M('Saffron Chicken Korma',480),M('Dal Makhani',340),M('Garlic Naan',90),M('Kesar Phirni',190),M('Masala Chaas',110,'bev')]},
+{id:'tandoor',name:'Urban Tandoor',cu:'Tandoori',r:4.4,pr:'₹₹₹',e:'🍢',h:12,d:'Clay-oven kebabs and breads with a modern city twist.',o:{t:'pct',v:25,min:1500,cap:500,ex:[]},m:[M('Tandoori Chicken (Full)',640),M('Achari Paneer Tikka',420),M('Lamb Seekh Kebab',560),M('Butter Naan',80),M('Dal Bukhara',380),M('Sweet Lassi',130,'bev')]},
+{id:'olive',name:'Olive & Thyme',cu:'Mediterranean',r:4.6,pr:'₹₹₹₹',e:'🫒',h:95,d:'Sunlit mezze, grills and herbed everything.',o:{t:'pct',v:30,min:2000,cap:600,ex:['bev']},m:[M('Lamb Souvlaki',720),M('Falafel Mezze Platter',540),M('Herbed Chicken',680),M('Truffle Hummus',320),M('Baklava',260),M('Fresh Lemonade',180,'bev'),M('Rose Mocktail',240,'bev')]},
+{id:'bombay',name:'Bombay Social Kitchen',cu:'Street Food',r:4.3,pr:'₹₹',e:'🥘',h:35,d:'Mumbai street classics, plated for sharing.',o:{t:'flat',v:250,min:1200,cap:0,ex:[]},m:[M('Vada Pav Sliders',220),M('Pav Bhaji',340),M('Butter Chicken Kulcha',460),M('Bombay Bhel',240),M('Cutting Chai',80,'bev'),M('Kulfi Falooda',220)]},
+{id:'noodle',name:'The Noodle House',cu:'Pan-Asian',r:4.2,pr:'₹₹',e:'🍜',h:60,d:'Wok-fired noodles, dumplings and bright Asian flavours.',o:{t:'pct',v:15,min:800,cap:0,ex:[]},m:[M('Chilli Garlic Noodles',320),M('Dan Dan Noodles',360),M('Veg Gyoza',280),M('Kung Pao Chicken',420),M('Thai Iced Tea',160,'bev')]},
+{id:'coastal',name:'Coastal Curry Co.',cu:'Seafood',r:4.5,pr:'₹₹₹',e:'🦐',h:200,d:'Konkan and Malabar seafood with fresh coconut and curry leaf.',o:{t:'pct',v:20,min:1000,cap:250,ex:['seafood']},m:[M('Seafood Platter (2 pax)',1400,'seafood'),M('Fish Curry Meal',380),M('Chicken Ghee Roast',420),M('Appam (2 pcs)',120),M('Prawn Gassi',560),M('Filter Coffee',90,'bev')]},
+{id:'italy',name:'Little Italy Kitchen',cu:'Italian',r:4.4,pr:'₹₹₹',e:'🍝',h:8,d:'Hand-rolled pasta and wood-fired pizza.',o:{t:'pct',v:25,min:1800,cap:450,ex:['setmenu']},m:[M('Margherita Pizza',480),M('Penne Arrabbiata',420),M('Baked Lasagna',560),M('Tiramisu',320),M("Chef’s Set Menu (2)",1900,'setmenu'),M('Espresso',140,'bev')]},
+{id:'dosa',name:'The Dosa District',cu:'South Indian',r:4.3,pr:'₹',e:'🥞',h:45,d:'Crisp dosas, fluffy idlis and strong filter coffee.',o:{t:'pct',v:10,min:500,cap:150,ex:[]},m:[M('Ghee Roast Dosa',160),M('Mysore Masala Dosa',180),M('Podi Idli',140),M('Medu Vada (2 pcs)',120),M('Rava Kesari',110),M('Filter Coffee',70,'bev')]},
+{id:'smoke',name:'Smokehouse Grill',cu:'BBQ',r:4.6,pr:'₹₹₹₹',e:'🍖',h:15,d:'Low-and-slow smoked meats and loaded sides.',o:{t:'pct',v:30,min:2500,cap:750,ex:['bev','combo']},m:[M('Smoked Brisket',890),M('BBQ Ribs Rack',960),M('Pulled Jackfruit Burger',420),M('Grill Feast Combo (2)',1600,'combo'),M('Mac & Cheese',340),M('Craft Iced Tea',150,'bev')]},
+{id:'green',name:'Green Bowl Cafe',cu:'Healthy Cafe',r:4.2,pr:'₹₹',e:'🥗',h:130,d:'Grain bowls, fresh juices and a small grocery shelf.',o:{t:'pct',v:20,min:700,cap:200,ex:['packaged']},m:[M('Quinoa Power Bowl',390),M('Avocado Toast',360),M('Hummus Wrap',320),M('Cold-pressed Juice',180,'bev'),M('Granola Jar',280,'packaged'),M('Protein Bar Box',350,'packaged')]},
+{id:'biryani',name:'The Royal Biryani Room',cu:'Biryani',r:4.5,pr:'₹₹₹',e:'🍚',h:20,d:'Dum-cooked biryanis sealed and opened at your table.',o:{t:'flat',v:300,min:1500,cap:0,ex:[]},m:[M('Dum Chicken Biryani',480),M('Mutton Biryani',640),M('Paneer Biryani',420),M('Chicken 65',360),M('Mirchi Ka Salan',180),M('Double Ka Meetha',190)]},
+{id:'monsoon',name:'Cafe Monsoon',cu:'Cafe',r:4.1,pr:'₹₹',e:'☕',h:200,d:'Rainy-day comfort: coffee, sandwiches and desserts.',o:{t:'pct',v:15,min:600,cap:180,ex:[]},m:[M('Cappuccino',190,'bev'),M('Club Sandwich',340),M('Peri Peri Fries',220),M('Baked Cheesecake',280),M('Cold Coffee',210,'bev'),M('Pasta Alfredo',380)]}];
+const byId=id=>R.find(x=>x.id==id);
+const fmt=n=>'₹'+(Math.round(n*100)/100).toLocaleString('en-IN',{maximumFractionDigits:2});
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const offerTxt=o=>(o.t=='pct'?o.v+'% off':'Flat '+fmt(o.v)+' off')+' · min '+fmt(o.min)+(o.cap?' · cap '+fmt(o.cap):' · no cap');
+const exTxt=o=>o.ex.length?'Excludes '+o.ex.map(k=>EXL[k].toLowerCase()).join(' and '):'No excluded items';
+const bg=r=>`background:linear-gradient(135deg,hsl(${r.h} 90% 88%),hsl(${(r.h+30)%360} 85% 76%))`;
+/* Deterministic offer engine: never uses AI for arithmetic */
+function calcOffer(o,gross,excluded,tax=0,chg=0){
+  const eligible=Math.max(0,gross-excluded);
+  const out={gross,excluded,eligible,tax,chg,raw:0,capped:false,d:0,ok:false,why:''};
+  if(gross<=0){out.why='Enter a bill amount or add menu items to begin.';return out}
+  if(eligible<o.min){out.why=`Not eligible yet: eligible food spend is ${fmt(eligible)}, but this offer needs at least ${fmt(o.min)}. Add ${fmt(o.min-eligible)} more eligible food to unlock it.`;}
+  else{out.ok=true;out.raw=o.t=='pct'?Math.round(eligible*o.v)/100:o.v;let d=out.raw;
+    if(o.cap&&d>o.cap){d=o.cap;out.capped=true}
+    d=Math.min(d,eligible);out.d=d}
+  out.sub=gross-out.d;out.pay=out.sub+tax+chg;out.pct=gross?out.d/gross*100:0;return out}
+/* Gemini service module: the key must live on a server proxy, never in this file */
+const GeminiService={configured:false,endpoint:'/api/gemini',
+ async ask(q,ctx){ if(!this.configured)return{source:'demo',text:demoAnswer(q,ctx)};
+  const r=await fetch(this.endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({q,ctx})});
+  return{source:'gemini',text:(await r.json()).text}}};
+const S={cart:{},mode:'items',amt:2000,exc:0,tax:0,chg:0,off:null,cmp:['saffron','tandoor','olive','bombay'],cmpBill:2000,cmpEx:0,q:'',cu:'All',sort:'rating',chatRid:'saffron',chat:[]};
+const $=s=>document.querySelector(s),app=$('#app');
+function nav(p){$('#nl').innerHTML=[['home','Home'],['explore','Restaurants'],['compare','Compare'],['assistant','Ask AI']].map(([h,t])=>`<a href="#${h}" class="${p==h?'on':''}">${t}</a>`).join('')}
+function rcard(r){const o=r.o;return`<a class="card" style="text-decoration:none;display:block" href="#r/${r.id}"><div class="img" style="${bg(r)}">${r.e}</div><h3 style="font-size:20px">${r.name}</h3><div class="mut sm">${r.cu} · ★ ${r.r} · ${r.pr}</div><p class="sm mut" style="margin:8px 0">${r.d}</p><span class="tag">${o.t=='pct'?o.v+'% off':'Flat '+fmt(o.v)+' off'}</span> <span class="sm mut">min ${fmt(o.min)}</span></a>`}
+function offerCard(r){const o=r.o;return`<div class="card"><span class="tag">${o.t=='pct'?o.v+'% OFF':'FLAT '+fmt(o.v)}</span><h3 style="font-size:20px;margin:10px 0 6px">${r.name}</h3><div class="sm">Minimum spend ${fmt(o.min)}<br>${o.cap?'Maximum discount '+fmt(o.cap):'No maximum discount'}<br><span class="${o.ex.length?'':'mut'}">${exTxt(o)}</span></div><a class="btn g" style="margin-top:14px" href="#r/${r.id}">Calculate my savings</a></div>`}
+const pages={
+home(){const f=R.filter(r=>['saffron','olive','smoke'].includes(r.id)),p=[...R].sort((a,b)=>b.r-a.r).slice(0,4);
+ app.innerHTML=`<section class="hero"><div><h1>Know what you’ll save before you dine.</h1><p>Minimum spends, excluded items and discount caps, worked out in plain numbers before you pick a table.</p>
+ <form class="search" id="hs"><input id="hq" placeholder="Search a restaurant or cuisine" aria-label="Search restaurants"><button class="btn">Search</button></form><span class="sm mut">Try “biryani”, “Italian” or “Saffron”</span></div>
+ <div class="ticket"><b>The Saffron Table</b> <span class="tag">20% off · cap ₹300</span><label class="lbl" for="hr">Drag your food bill: <span id="hv"></span></label><input type="range" id="hr" min="500" max="3500" step="50" value="1500"><div id="ht" style="margin-top:8px"></div></div></section>
+ <h2>Featured offers</h2><div class="grid">${f.map(offerCard).join('')}</div>
+ <h2>Popular restaurants</h2><div class="grid">${p.map(rcard).join('')}</div>
+ <h2>How BillWise works</h2><div class="grid">${[['Pick a restaurant','Browse 12 sample restaurants and their offer rules.'],['Build your bill','Add dishes or type an amount. Excluded items are flagged.'],['See the exact saving','Rules run as plain arithmetic, step by step.'],['Ask or compare','Question an offer or put several side by side.']].map(([a,b],i)=>`<div class="card"><span class="tag">Step ${i+1}</span><h3 style="font-size:19px;margin:10px 0 6px">${a}</h3><p class="mut sm" style="margin:0">${b}</p></div>`).join('')}</div>
+ <h2>Why diners use it</h2><div class="grid">${[['No surprises','Every discount shows its minimum, cap and exclusions.'],['Honest maths','Calculations are deterministic code, never AI guesses.'],['Smarter choices','Compare offers on your own bill, not on headline percentages.']].map(([a,b])=>`<div class="card"><h3 style="font-size:19px">${a}</h3><p class="mut sm">${b}</p></div>`).join('')}</div>`;
+ const u=()=>{const v=+$('#hr').value,c=calcOffer(byId('saffron').o,v,0);$('#hv').textContent=fmt(v);
+  $('#ht').innerHTML=`<div class="row"><span>Eligible spend</span><span>${fmt(c.eligible)}</span></div><div class="row"><span>Discount${c.capped?' (capped)':''}</span><span class="neg">${c.ok?'−'+fmt(c.d):'Not eligible'}</span></div><div class="row t"><span>Estimated food bill</span><span>${fmt(c.sub)}</span></div>${c.ok?'':'<div class="sm mut">Minimum spend is ₹1,000.</div>'}`};
+ $('#hr').oninput=u;u();$('#hs').onsubmit=e=>{e.preventDefault();S.q=$('#hq').value;location.hash='explore'}},
+explore(){const cus=['All',...new Set(R.map(r=>r.cu))];
+ app.innerHTML=`<h2 style="margin-top:20px">Restaurants</h2><div class="search"><input id="q" value="${esc(S.q)}" placeholder="Search by name or cuisine" aria-label="Search"><select id="so" class="in" style="width:auto" aria-label="Sort"><option value="rating">Top rated</option><option value="disc">Highest discount cap</option><option value="min">Lowest minimum spend</option></select></div>
+ <div id="cc" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">${cus.map(c=>`<button class="chip ${S.cu==c?'on':''}" data-c="${c}">${c}</button>`).join('')}</div><div class="grid" id="rg"></div>`;
+ $('#so').value=S.sort;const draw=()=>{let l=R.filter(r=>(S.cu=='All'||r.cu==S.cu)&&(r.name+r.cu).toLowerCase().includes(S.q.toLowerCase()));
+  l.sort((a,b)=>S.sort=='rating'?b.r-a.r:S.sort=='min'?a.o.min-b.o.min:(b.o.cap||b.o.v)-(a.o.cap||a.o.v));
+  $('#rg').innerHTML=l.length?l.map(rcard).join(''):'<div class="card">No restaurants match. Clear the search or choose “All”.</div>'};draw();
+ $('#q').oninput=e=>{S.q=e.target.value;draw()};$('#so').onchange=e=>{S.sort=e.target.value;draw()};
+ $('#cc').onclick=e=>{if(e.target.dataset.c){S.cu=e.target.dataset.c;pages.explore()}}},
+detail(id){const r=byId(id);if(!r)return location.hash='explore';
+ if(S.rid!=id){S.rid=id;S.cart={};S.off=id;S.amt=2000;S.exc=0;S.mode='items'}
+ app.innerHTML=`<a href="#explore" class="mut">← All restaurants</a><div class="card" style="margin:12px 0;display:flex;gap:20px;align-items:center;flex-wrap:wrap"><div class="img" style="${bg(r)};width:140px;margin:0">${r.e}</div><div style="flex:1;min-width:220px"><h1 style="font-size:36px">${r.name}</h1><div class="mut">${r.cu} · ★ ${r.r} (illustrative) · ${r.pr}</div><p style="margin:8px 0">${r.d}</p><span class="tag">${offerTxt(r.o)}</span> <span class="tag ${r.o.ex.length?'x':''}">${exTxt(r.o)}</span></div></div>
+ <div class="two"><div class="card"><h3>Smart bill calculator</h3><div style="display:flex;gap:8px;margin-top:12px"><button class="chip" data-m="items">Pick dishes</button><button class="chip" data-m="amount">Enter bill amount</button></div><div id="inp"></div>
+ <label class="lbl" for="of">Offer to apply</label><select id="of" class="in">${R.map(x=>`<option value="${x.id}">${x.name}: ${offerTxt(x.o)}</option>`).join('')}</select>
+ <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div><label class="lbl" for="tx">Taxes you pay (₹)</label><input id="tx" class="in" type="number" min="0" placeholder="0"></div><div><label class="lbl" for="ch">Other charges (₹)</label><input id="ch" class="in" type="number" min="0" placeholder="0"></div></div><p class="sm mut">Taxes and charges are entered by you. BillWise doesn’t assume any rate.</p></div>
+ <div class="card" id="res" style="position:sticky;top:10px"></div></div>`;
+ $('#of').value=S.off;const dr=()=>{drawIn(r);drawRes(r)};
+ app.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{S.mode=b.dataset.m;dr()});
+ $('#of').onchange=e=>{S.off=e.target.value;dr()};$('#tx').oninput=e=>{S.tax=Math.max(0,+e.target.value||0);drawRes(r)};$('#ch').oninput=e=>{S.chg=Math.max(0,+e.target.value||0);drawRes(r)};
+ $('#tx').value=S.tax||'';$('#ch').value=S.chg||'';dr()},
+compare(){app.innerHTML=`<h2 style="margin-top:20px">Compare offers</h2><p class="mut">Same bill, different offers. Enter the amount and how much of it is excluded food, then tick restaurants to compare.</p>
+ <div class="card"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div><label class="lbl" for="cb">Bill amount (₹)</label><input id="cb" class="in" type="number" min="0" value="${S.cmpBill}"></div><div><label class="lbl" for="ce">Excluded items in it (₹)</label><input id="ce" class="in" type="number" min="0" value="${S.cmpEx}"></div></div>
+ <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px" id="cp">${R.map(r=>`<button class="chip ${S.cmp.includes(r.id)?'on':''}" data-r="${r.id}">${r.name}</button>`).join('')}</div><p class="sm mut">Exclusions differ by restaurant, so the excluded amount you enter is applied equally. Open a restaurant to use its real menu.</p></div><div id="cr" class="grid" style="margin-top:18px"></div>`;
+ const dr=()=>{const err=S.cmp.length<2?'<div class="banner no">Pick at least two restaurants to compare.</div>':'';
+  const rows=S.cmp.map(id=>{const r=byId(id);return{r,c:calcOffer(r.o,S.cmpBill,Math.min(S.cmpEx,S.cmpBill))}}).sort((a,b)=>a.c.pay-b.c.pay);
+  $('#cr').innerHTML=err+rows.map((x,i)=>`<div class="card ${i==0&&S.cmp.length>1&&x.c.ok?'best':''}">${i==0&&x.c.ok?'<span class="tag">Lowest payable</span>':''}<h3 style="font-size:19px;margin:8px 0">${x.r.name}</h3><div class="sm mut">${offerTxt(x.r.o)}</div><div class="banner ${x.c.ok?'ok':'no'} sm">${x.c.ok?'Eligible':esc(x.c.why)}</div><div class="row"><span>Discount</span><span>${fmt(x.c.d)}</span></div><div class="row t"><span>Est. payable</span><span>${fmt(x.c.sub)}</span></div><a href="#r/${x.r.id}" class="sm">Open calculator</a></div>`).join('')};
+ $('#cb').oninput=e=>{S.cmpBill=Math.max(0,+e.target.value||0);dr()};$('#ce').oninput=e=>{S.cmpEx=Math.max(0,+e.target.value||0);dr()};
+ $('#cp').onclick=e=>{const id=e.target.dataset.r;if(!id)return;S.cmp=S.cmp.includes(id)?S.cmp.filter(x=>x!=id):[...S.cmp,id];pages.compare()};dr()},
+assistant(){const r=byId(S.chatRid);const qs=['Why is my discount capped?','Do excluded items count?',"What if I don’t meet minimum spending?",'Which offer saves me more?','Explain this offer in simple language.'];
+ app.innerHTML=`<h2 style="margin-top:20px">Offer assistant</h2><div class="banner no sm">Demo mode: Gemini is not connected. Replies below are written from each offer’s rules, not generated by AI. A real integration needs a secure server-side proxy so the API key is never in browser code.</div>
+ <div class="card"><label class="lbl" for="cr2" style="margin-top:0">Ask about</label><select id="cr2" class="in">${R.map(x=>`<option value="${x.id}">${x.name}</option>`).join('')}</select>
+ <div class="chat" id="ch" aria-live="polite"></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">${qs.map(q=>`<button class="chip" data-q="${q}">${q}</button>`).join('')}</div>
+ <form class="search" id="cf" style="margin:0"><input id="ci" placeholder="Ask about ${esc(r.name)}’s offer" aria-label="Your question"><button class="btn">Send</button></form></div>`;
+ $('#cr2').value=S.chatRid;$('#cr2').onchange=e=>{S.chatRid=e.target.value;S.chat=[];pages.assistant()};
+ const dr=()=>{const c=$('#ch');c.innerHTML=S.chat.length?S.chat.map(m=>`<div class="msg ${m.u?'u':'a'}">${esc(m.t)}${m.u?'':'<div class="sm mut" style="margin-top:6px">Demo answer from offer rules</div>'}</div>`).join(''):'<div class="mut">Choose a question below or type your own.</div>';c.scrollTop=c.scrollHeight};
+ const ask=async q=>{if(!q.trim())return;S.chat.push({u:1,t:q});dr();try{const a=await GeminiService.ask(q,r);S.chat.push({t:a.text})}catch(e){S.chat.push({t:'The assistant could not answer right now. Try again.'})}dr()};
+ app.querySelectorAll('[data-q]').forEach(b=>b.onclick=()=>ask(b.dataset.q));$('#cf').onsubmit=e=>{e.preventDefault();const v=$('#ci').value;$('#ci').value='';ask(v)};dr()},
+book(id){const r=byId(id)||R[0],c=S.last;
+ app.innerHTML=`<h2 style="margin-top:20px">Reserve a table (simulation)</h2><div class="banner no">This is a simulation. No reservation is made and nothing is sent to ${esc(r.name)}.</div><div class="two"><form class="card" id="bf"><h3>${r.name}</h3>
+ <label class="lbl" for="bn">Name</label><input id="bn" class="in"><label class="lbl" for="bd">Date</label><input id="bd" type="date" class="in"><label class="lbl" for="bt">Time</label><select id="bt" class="in">${['12:30','13:30','19:30','20:30','21:30'].map(t=>`<option>${t}</option>`).join('')}</select><label class="lbl" for="bg">Guests</label><input id="bg" type="number" min="1" max="12" value="2" class="in"><div id="be" class="sm" style="color:var(--bad);margin-top:8px"></div><button class="btn" style="margin-top:14px">Simulate booking</button></form>
+ <div class="card" id="bs"><h3>Savings summary</h3>${c&&c.rid==id&&c.c.gross>0?sumHTML(c.c,c.o):'<p class="mut">Calculate a bill on the restaurant page to carry your estimate here.</p>'}</div></div>`;
+ $('#bd').min=new Date().toISOString().slice(0,10);
+ $('#bf').onsubmit=e=>{e.preventDefault();const n=$('#bn').value.trim(),d=$('#bd').value,g=+$('#bg').value;
+  if(!n||!d||!(g>=1&&g<=12)){$('#be').textContent='Enter your name, a date and 1 to 12 guests.';return}
+  $('#bf').outerHTML=`<div class="card"><span class="tag">Simulated confirmation</span><h3 style="margin:10px 0">Table for ${g} at ${esc(r.name)}</h3><div class="banner no sm">Practice booking only. No reservation exists. Contact the restaurant for a real one.</div><div class="row"><span>Guest</span><span>${esc(n)}</span></div><div class="row"><span>Date and time</span><span>${esc(d)}, ${$('#bt').value}</span></div><div class="row"><span>Demo reference</span><span>SIM-${Math.random().toString(36).slice(2,8).toUpperCase()}</span></div><a class="btn g" style="margin-top:12px" href="#home">Back to home</a></div>`}}};
+function sumHTML(c,o){return`<div class="row"><span>Original food bill</span><span>${fmt(c.gross)}</span></div><div class="row"><span>Excluded from offer</span><span>−${fmt(c.excluded)}</span></div><div class="row"><span>Eligible amount</span><span>${fmt(c.eligible)}</span></div>
+ <div class="row"><span>Minimum spend ${fmt(o.min)}</span><span>${c.eligible>=o.min?'Met':'Not met'}</span></div>
+ ${c.ok?`<div class="row"><span>${o.t=='pct'?o.v+'% of '+fmt(c.eligible):'Flat discount'}</span><span>${fmt(c.raw)}</span></div>${o.cap?`<div class="row"><span>Cap ${fmt(o.cap)}</span><span>${c.capped?'Applied':'Not needed'}</span></div>`:''}`:''}
+ <div class="row"><span>Discount</span><span class="neg">−${fmt(c.d)}</span></div><div class="row"><span>Food after discount</span><span>${fmt(c.sub)}</span></div><div class="row"><span>Taxes (entered by you)</span><span>+${fmt(c.tax)}</span></div><div class="row"><span>Other charges (entered by you)</span><span>+${fmt(c.chg)}</span></div>
+ <div class="row t"><span>Estimated payable</span><span>${fmt(c.pay)}</span></div><div class="bar"><i style="width:${Math.min(100,c.pct)}%"></i></div><div class="sm"><b>${c.pct.toFixed(1)}%</b> estimated saving on the food bill</div>`}
+function getCalc(r){let g,x;
+ if(S.mode=='items'){g=0;x=0;r.m.forEach((it,i)=>{const q=S.cart[i]||0;g+=q*it.p;if(S.off&&byId(S.off).o.ex.includes(it.c))x+=q*it.p})}
+ else{g=S.amt;x=Math.min(S.exc,g)}
+ return calcOffer(byId(S.off).o,g,x,S.tax,S.chg)}
+function drawIn(r){const o=byId(S.off).o;app.querySelectorAll('[data-m]').forEach(b=>b.classList.toggle('on',b.dataset.m==S.mode));
+ $('#inp').innerHTML=S.mode=='items'?r.m.map((it,i)=>{const ex=o.ex.includes(it.c);return`<div class="item"><div>${it.n} ${ex?`<span class="tag x">Excluded: ${EXL[it.c].toLowerCase()}</span>`:''}<div class="sm mut">${fmt(it.p)}</div></div><div class="st"><button data-d="-1" data-i="${i}" aria-label="Remove one ${it.n}">−</button><b>${S.cart[i]||0}</b><button data-d="1" data-i="${i}" aria-label="Add one ${it.n}">+</button></div></div>`}).join(''):
+ `<label class="lbl" for="am">Food bill amount (₹)</label><input id="am" class="in" type="number" min="0" value="${S.amt}"><label class="lbl" for="ex">Part of it that is excluded (₹)</label><input id="ex" class="in" type="number" min="0" value="${S.exc}"><p class="sm mut">${exTxt(o)}</p>`;
+ app.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{const i=b.dataset.i;S.cart[i]=Math.max(0,(S.cart[i]||0)+ +b.dataset.d);drawIn(r);drawRes(r)});
+ if(S.mode=='amount'){$('#am').oninput=e=>{S.amt=Math.max(0,+e.target.value||0);drawRes(r)};$('#ex').oninput=e=>{S.exc=Math.max(0,+e.target.value||0);drawRes(r)}}}
+function drawRes(r){const c=getCalc(r),o=byId(S.off).o;S.last={rid:r.id,c,o};S.cmpBill=c.gross||S.cmpBill;S.cmpEx=c.excluded;S.bill=c.gross;
+ $('#res').innerHTML=`<h3>Estimated savings</h3><div class="banner ${c.ok?'ok':'no'}">${c.ok?`You’d save about ${fmt(c.d)}${c.capped?' (discount cap applied)':''}.`:esc(c.why)}</div>${c.gross>0?sumHTML(c,o):''}<p class="sm mut">All figures are estimates from sample offer rules.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn" href="#book/${r.id}">Reserve (simulation)</a><a class="btn g" href="#compare">Compare offers</a><a class="btn g" href="#assistant" onclick="S.chatRid='${r.id}';S.chat=[]">Ask AI</a></div>`}
+function demoAnswer(q,r){const o=r.o,l=q.toLowerCase(),b=S.bill||2000;
+ if(/cap/.test(l))return o.cap?`${r.name} limits this offer to ${fmt(o.cap)}. ${o.t=='pct'?`At ${o.v}%, the cap starts to bite once eligible spend passes ${fmt(Math.round(o.cap*100/o.v))}. Spending more after that won’t raise the discount.`:'A flat offer is a fixed amount.'}`:`This offer has no cap, so the discount keeps growing with your eligible spend.`;
+ if(/exclu|count/.test(l))return o.ex.length?`No. ${exTxt(o)}. Those items are removed first, and only the remaining food is checked against the ${fmt(o.min)} minimum and discounted.`:`This offer lists no exclusions, so all food on the bill counts toward the ${fmt(o.min)} minimum.`;
+ if(/minimum|meet|min/.test(l))return `The offer doesn’t apply. You’d pay the full bill with no discount. Eligible spend needs to reach ${fmt(o.min)}. Add dishes in the calculator to see exactly how much more you need.`;
+ if(/more|compare|better|which/.test(l)){const t=R.map(x=>({x,c:calcOffer(x.o,b,0)})).filter(z=>z.c.ok).sort((a,c)=>c.c.d-a.c.d).slice(0,3);return t.length?`On a ${fmt(b)} bill with nothing excluded, the biggest estimated savings are:\n`+t.map(z=>`${z.x.name}: ${fmt(z.c.d)}`).join('\n')+'\nExclusions may change this. Use Compare for your own numbers.':`On a ${fmt(b)} bill no sample offer applies yet.`}
+ if(/simple|explain|what/.test(l))return `${r.name}: you get ${o.t=='pct'?o.v+'% off':fmt(o.v)+' off'} if your eligible food spend is at least ${fmt(o.min)}. ${o.cap?`The most you can save is ${fmt(o.cap)}.`:'There is no upper limit on the saving.'} ${exTxt(o)}. Taxes and charges are not discounted.`;
+ return 'I can answer questions about minimum spend, caps, exclusions, or which offer saves more. Try one of the suggested questions.'}
+function go(){const h=location.hash.slice(1)||'home',[p,a]=h.split('/');const k={r:'detail',book:'book'}[p]||p;nav(p=='r'?'explore':p);
+ (pages[k]||pages.home)(a);window.scrollTo(0,0)}
+addEventListener('hashchange',go);go();
+</script></body></html>
